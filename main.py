@@ -33,10 +33,16 @@ def get_estates(sub_category):
 
 
 
+def get_latest_message_id():
+    base_url = f'https://api.telegram.org/bot{bot_token}/getUpdates' # ?offset=<{last_update_id-50}'
+    r = requests.get(base_url)
+    last_update_id = r.json()['result'][-1]['update_id'] -90
+    return last_update_id
 
-def get_chat_history(bot_token, chat_id):
+
+def get_chat_history(bot_token, chat_id,offset):
     base_url = f'https://api.telegram.org/bot{bot_token}/'
-    params = {'chat_id': chat_id}
+    params = {'chat_id': chat_id,'offset':offset}
     response = requests.get(base_url + 'getUpdates', params=params)
     return response.json()
 
@@ -107,12 +113,14 @@ def main(send_all_estates=False):
   new_hashes = [get_hash_id(i[2]) for i in estates]
   print("Estates downloaded")
 
-  chat_history = get_chat_history(bot_token, chat_id)
+  offset = get_latest_message_id()
+
+  chat_history = get_chat_history(bot_token, chat_id,offset)
 
   old_hashes =get_old_hashes(chat_history)
 
   if send_all_estates:
-    print("Sending new estates")
+    print("Sending all estates")
     send_new_estates(new_hashes,estates)
   else:
     print("Sending new estates")
@@ -122,9 +130,4 @@ def main(send_all_estates=False):
 
 if __name__=="__main__":
    main()
-
-
-
-
-
 
