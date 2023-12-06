@@ -3,7 +3,9 @@ name: Send New Estates
 on:
   schedule:
     - cron: '0 * * * *'  # This runs the job every hour
-
+  dispatch:
+    types:
+      - manual
 jobs:
   run-code:
     runs-on: ubuntu-latest
