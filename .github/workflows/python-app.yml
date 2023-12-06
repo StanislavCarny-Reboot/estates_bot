@@ -1,0 +1,28 @@
+name: Send New Estates
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # This runs the job every hour
+
+jobs:
+  run-code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8  # Change this to your desired Python version
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Add this line if you have a requirements.txt file
+
+    - name: Run main.py
+      run: python main.py
+      env:
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
