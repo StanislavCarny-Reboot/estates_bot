@@ -3,9 +3,13 @@ name: Send New Estates
 on:
   schedule:
     - cron: '0 * * * *'  # This runs the job every hour
-  repository_dispatch:
-    types:
-      - manual-trigger
+  workflow_dispatch:
+    inputs:
+      example-input:
+        description: 'An example input'
+        required: false
+
+  
 jobs:
   run-code:
     runs-on: ubuntu-latest
