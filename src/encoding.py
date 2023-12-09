@@ -3,11 +3,11 @@ import base64
 import os 
 
 
-from pathlib import Path
-import sys
-path_root = Path(__file__).parents[2]
-sys.path.append(str(path_root))
-print(sys.path)
+#from pathlib import Path
+#import sys
+#path_root = Path(__file__).parents[2]
+#sys.path.append(str(path_root))
+#print(sys.path)
 
 
 # with open("key_file.json", 'r') as file:
