@@ -11,11 +11,11 @@ from src.send_message import (
 from src.constants import (CHAT_ID,BOT_TOKEN)
 from src.log_hash import log_new_hashes
 
-from pathlib import Path
-import sys
-path_root = Path(__file__).parents[2]
-sys.path.append(str(path_root))
-print(sys.path)
+#from pathlib import Path
+#import sys
+#path_root = Path(__file__).parents[2]
+#sys.path.append(str(path_root))
+#print(sys.path)
 
 
 
