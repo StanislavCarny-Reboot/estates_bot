@@ -10,8 +10,8 @@ sys.path.append(str(path_root))
 print(sys.path)
 
 
-with open("key_file.json", 'r') as file:
-    json_data = json.load(file)
+# with open("key_file.json", 'r') as file:
+#   json_data = json.load(file)
 
 def encode(json_data):
     json_string = json.dumps(json_data)
