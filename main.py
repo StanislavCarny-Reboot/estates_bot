@@ -21,7 +21,7 @@ def get_estates(sub_category):
             'czk_price_summary_order2': ['0|18000'],
             'estate_age': ['2'],
             'locality_region_id': ['10'],
-            'per_page': ['20', '999'],
+            'per_page': ['999'],
             'tms': ['1701812490425']}
 
         r = requests.get("https://www.sreality.cz/api/cs/v2/estates", params=query_params)
@@ -109,7 +109,7 @@ def get_old_hashes(chat_history):
 
 
 def main(send_all_estates=False):
-  estates = get_estates(sub_category=[2,3,4,5])
+  estates = get_estates(sub_category=[2,3])
   new_hashes = [get_hash_id(i[2]) for i in estates]
   print("Estates downloaded")
 
