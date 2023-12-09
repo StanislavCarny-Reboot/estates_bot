@@ -16,7 +16,6 @@ googleapis-common-protos==1.62.0
 httplib2==0.22.0
 idna==3.6
 ipykernel==6.27.1
-ipython==8.18.1
 jedi==0.19.1
 jupyter_client==8.6.0
 jupyter_core==5.5.0
