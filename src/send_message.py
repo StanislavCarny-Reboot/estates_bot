@@ -3,14 +3,15 @@ import re
 from src.constants import (CHAT_ID,BOT_TOKEN)
 
 
-def get_estates(sub_category):
+
+def get_estates(category_coding):
     all_apartments = []
-  
-    for cat in sub_category:
+
+    for cat,cat_index in category_coding.items():
         query_params = {'category_main_cb': ['1'],
-            'category_sub_cb': [f'{cat}'],
-            'category_type_cb': ['2'],
-            'czk_price_summary_order2': ['0|18000'],
+            'category_sub_cb': [f'{cat_index}'],
+            'category_type_cb': ['1'],
+            'czk_price_summary_order2': ['0|8000000'],
             'estate_age': ['2'],
             'locality_region_id': ['10'],
             'per_page': ['999'],
@@ -18,11 +19,10 @@ def get_estates(sub_category):
 
         r = requests.get("https://www.sreality.cz/api/cs/v2/estates", params=query_params)
         estates = r.json()['_embedded']['estates']
-        base = "https://www.sreality.cz/detail/pronajem/byt/1+kk/"
+        base = f"https://www.sreality.cz/detail/prodej/byt/{cat}/"
         new_apartments = [(i['price'],i['locality'],f"{base}{i['seo']['locality']}/{i['hash_id']}") for i in estates]
         all_apartments = all_apartments + new_apartments
     return all_apartments
-
 
 
 def get_latest_message_id():

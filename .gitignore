@@ -1,4 +1,4 @@
 venv
 .env
 key_file.json
-__pycache__
+__pycache__ 

@@ -16,11 +16,17 @@ from src.log_hash import log_new_hashes
 #path_root = Path(__file__).parents[2]
 #sys.path.append(str(path_root))
 #print(sys.path)
+category_coding={
+    "2+kk":4,
+    "2+1":5,
+    "3+kk":6,
+    "3+1":7
+}
 
 
 
 def main(send_all_estates=False):
-  estates = get_estates(sub_category=[2,3])
+  estates = get_estates(category_coding)
   new_hashes = [get_hash_id(i[2]) for i in estates]
   print("Estates downloaded")
 
