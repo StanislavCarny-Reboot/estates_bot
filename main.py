@@ -8,7 +8,7 @@ from src.send_message import (
   compare_hashes
 )
 
-from src.constants import (CHAT_ID,BOT_TOKEN)
+from src.constants import (CHAT_ID,BOT_TOKEN,FORWARD_CHAT_ID)
 from src.log_hash import log_new_hashes
 
 #from pathlib import Path
@@ -47,7 +47,8 @@ def main(send_all_estates=False):
     else:
       log_new_hashes(hashes_to_send,clear_all=False)
       print("Sending new estates")
-      send_new_estates(hashes_to_send,estates)
+      send_new_estates(hashes_to_send,estates,CHAT_ID)
+      send_new_estates(hashes_to_send,estates,FORWARD_CHAT_ID)
 
 
 if __name__=="__main__":

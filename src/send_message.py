@@ -1,6 +1,6 @@
 import requests
 import re
-from src.constants import (CHAT_ID,BOT_TOKEN)
+from src.constants import (BOT_TOKEN)
 
 
 
@@ -44,16 +44,18 @@ def get_hash_id(text):
   last_number = int(matches[-1]) if matches else None
   return last_number
 
-def send_message(message_text):
+
+def send_message(message_text,chat_id):
     send_message_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    send_message_params = {"chat_id": CHAT_ID, "text": message_text}
+    send_message_params = {"chat_id": chat_id, "text": message_text}
     data = requests.get(send_message_url, params=send_message_params)
     return data
 
 
-def pin_message(message_id):
+
+def pin_message(message_id,chat_id):
     pin_message_params = {
-        "chat_id": CHAT_ID,
+        "chat_id": chat_id,
         "message_id": message_id,
     }
     pin_message_url = f"https://api.telegram.org/bot{BOT_TOKEN}/pinChatMessage"
@@ -61,14 +63,30 @@ def pin_message(message_id):
     return data
 
 
-def send_and_pin_chat_message(message):
-    response = send_message(message)
+def send_and_pin_chat_message(message,chat_id):
+    response = send_message(message,chat_id)
     if response.status_code == 200:
         message_id = response.json()["result"]["message_id"]
-        pin_response = pin_message(message_id)
+        pin_response = pin_message(message_id,chat_id)
         print(f"Message {message_id} pinned successfully in chat")
     else:
         print(f"Error {response.status_code}")
+
+
+
+def compare_hashes(old_hashes,new_hashes):
+  old = set(old_hashes)
+  new = set(new_hashes)
+  new_estate_hashes = list(new-old)
+  return new_estate_hashes
+
+
+
+def send_new_estates(hashes_to_send,estates,chat_id):
+  for i in estates:
+    if get_hash_id(i[2]) in hashes_to_send:
+      message = f"{i[1]} \n {i[2]}"
+      send_and_pin_chat_message(message,chat_id)
 
 
 
