@@ -33,3 +33,4 @@ jobs:
         CHAT_ID: ${{ secrets.CHAT_ID }}
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         SERVICE_ACCOUNT_ENCODED:  ${{ secrets.SERVICE_ACCOUNT_ENCODED }}
+        FORWARD_CHAT_ID:  ${{ secrets.FORWARD_CHAT_ID }}
