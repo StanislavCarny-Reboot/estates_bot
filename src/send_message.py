@@ -90,20 +90,6 @@ def send_new_estates(hashes_to_send,estates,chat_id):
 
 
 
-def compare_hashes(old_hashes,new_hashes):
-  old = set(old_hashes)
-  new = set(new_hashes)
-  new_estate_hashes = list(new-old)
-  return new_estate_hashes
-
-
-
-def send_new_estates(hashes_to_send,estates):
-  for i in estates:
-    if get_hash_id(i[2]) in hashes_to_send:
-      message = f"{i[1]} \n {i[2]}"
-      send_and_pin_chat_message(message)
-
 
 
 def get_old_hashes(chat_history):
