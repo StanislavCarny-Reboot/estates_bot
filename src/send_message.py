@@ -14,6 +14,9 @@ def get_estates(category_coding):
             'czk_price_summary_order2': ['0|8000000'],
             'estate_age': ['2'],
             'locality_region_id': ['10'],
+            'locality_district_id': ['5007'],
+            'floor_number':['2|100'],
+            'usable_area':['50|10000000000'],
             'per_page': ['999'],
             'tms': ['1701812490425']}
 
