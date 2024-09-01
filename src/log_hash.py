@@ -70,10 +70,12 @@ def compare_hashes(old_hashes, new_hashes):
 def check_if_same_day(history_data):
     current_date = datetime.today().strftime("%Y-%m-%d")
 
-    if not history_data:
+    values = history_data["values"][1:]
+
+    if not values:
         max_date_history = datetime.today().strftime("%Y-%m-%d")
     else:
-        max_date_history = max([i[0] for i in history_data["values"][1:]])
+        max_date_history = max([i[0] for i in values])
     return current_date == max_date_history
 
 
