@@ -1,58 +1,36 @@
-from src.send_message import (
-  get_estates,
-  get_hash_id,
-  get_latest_message_id,
-  get_chat_history,
-  get_old_hashes,
-  send_new_estates,
-  compare_hashes
+from datetime import datetime
+from src.send_message import get_estates, get_hash_id, send_new_estates
+from src.log_hash import (
+    append_values_to_sheet,
+    get_spreadsheet_data,
+    compare_hashes,
+    check_if_same_day,
+    clear_sheet,
 )
-
-from src.constants import (CHAT_ID,BOT_TOKEN,FORWARD_CHAT_ID)
-from src.log_hash import log_new_hashes
-
-#from pathlib import Path
-#import sys
-#path_root = Path(__file__).parents[2]
-#sys.path.append(str(path_root))
-#print(sys.path)
-category_coding={
-    "2+kk":4,
-    "2+1":5,
-    "3+kk":6,
-    "3+1":7
-}
+from src.constants import HISTORY_SPREADSHEET_ID
+from src.constants import CHAT_ID, FORWARD_CHAT_ID
+from loguru import logger
 
 
+category_coding = {"2+kk": 4, "2+1": 5, "3+kk": 6, "3+1": 7}
+estates = get_estates(category_coding)
+new_hashes = [str(get_hash_id(i[2])) for i in estates]
 
-def main(send_all_estates=False):
-  estates = get_estates(category_coding)
-  new_hashes = [get_hash_id(i[2]) for i in estates]
-  print("Estates downloaded")
 
-  offset = get_latest_message_id()
+history_data = get_spreadsheet_data(HISTORY_SPREADSHEET_ID)
+old_hashes = [i[1] for i in history_data["values"][1:]]
+new_data = compare_hashes(old_hashes, new_hashes)
 
-  chat_history = get_chat_history(BOT_TOKEN, CHAT_ID,offset)
 
-  old_hashes =get_old_hashes(chat_history)
-
-  if send_all_estates:
-    print("Sending all estates")
-    send_new_estates(new_hashes,estates)
-  else:
-    hashes_to_send = compare_hashes(old_hashes,new_hashes)
-    if len(hashes_to_send)==0:
-      print("No updates")
-      return
+if check_if_same_day(history_data):
+    if new_data:
+        append_values_to_sheet(new_data, HISTORY_SPREADSHEET_ID)
     else:
-      log_new_hashes(hashes_to_send,clear_all=False)
-      print("Sending new estates")
-      send_new_estates(hashes_to_send,estates,CHAT_ID)
-      send_new_estates(hashes_to_send,estates,FORWARD_CHAT_ID)
+        logger.info("No new data found")
+else:
 
-
-if __name__=="__main__":
-   main()
-
-
-
+    logger.info("New day, clearing sheet")
+    clear_sheet(HISTORY_SPREADSHEET_ID)
+    append_values_to_sheet(new_data, HISTORY_SPREADSHEET_ID)
+    send_new_estates(new_data, estates, CHAT_ID)
+    send_new_estates(new_data, estates, FORWARD_CHAT_ID)
