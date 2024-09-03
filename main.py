@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.send_message import get_estates, get_hash_id, send_new_estates
+from src.send_message import get_estates, get_hash_id, send_new_estates,send_and_pin_chat_message
 from src.log_hash import (
     append_values_to_sheet,
     get_spreadsheet_data,
@@ -28,6 +28,7 @@ if check_if_same_day(history_data):
         logger.info("sending data to telegram")
         send_new_estates(new_data, estates, CHAT_ID)
         send_new_estates(new_data, estates, FORWARD_CHAT_ID)
+        send_and_pin_chat_message("what is happening",CHAT_ID)
         logger.success("all data sent")
     else:
         logger.info("No new data found")
