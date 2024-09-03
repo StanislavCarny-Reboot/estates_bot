@@ -25,6 +25,8 @@ new_data = compare_hashes(old_hashes, new_hashes)
 if check_if_same_day(history_data):
     if new_data:
         append_values_to_sheet(new_data, HISTORY_SPREADSHEET_ID)
+        send_new_estates(new_data, estates, CHAT_ID)
+        send_new_estates(new_data, estates, FORWARD_CHAT_ID)
     else:
         logger.info("No new data found")
 else:
