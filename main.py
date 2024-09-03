@@ -28,7 +28,6 @@ if check_if_same_day(history_data):
         logger.info("sending data to telegram")
         send_new_estates(new_data, estates, CHAT_ID)
         send_new_estates(new_data, estates, FORWARD_CHAT_ID)
-        send_and_pin_chat_message("what is happening",CHAT_ID)
         logger.success("all data sent")
     else:
         logger.info("No new data found")
