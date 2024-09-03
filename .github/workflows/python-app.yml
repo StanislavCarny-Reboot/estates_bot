@@ -2,8 +2,8 @@ name: Send New Estates
 
 on:
   schedule:
-      - cron: '0 1 * * *'  # This runs the job every day
-    # - cron: '0 * * * *'  # This runs the job every hour
+      # - cron: '0 1 * * *'  # This runs the job every day
+    - cron: '0 * * * *'  # This runs the job every hour
   workflow_dispatch:
     inputs:
       example-input:
