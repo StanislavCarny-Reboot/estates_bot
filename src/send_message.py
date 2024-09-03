@@ -56,7 +56,7 @@ def get_chat_history(bot_token, chat_id, offset):
 def get_hash_id(text):
     pattern = r"\b(\d+)\b"
     matches = re.findall(pattern, text)
-    last_number = int(matches[-1]) if matches else None
+    last_number = str(matches[-1]) if matches else None
     return last_number
 
 
